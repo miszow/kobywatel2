@@ -19,7 +19,7 @@
             min-height: 100vh;
             background-color: #f5f6fb;
             padding: 20px;
-            padding-top: 60px;
+            padding-top: 80px;
             padding-bottom: 100px;
         }
 
@@ -28,13 +28,13 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
-            background-color: white;
-            border-bottom: 0.5px solid rgb(201, 201, 201);
+            height: auto;
+            background-color: transparent;
+            border-bottom: none;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
+            justify-content: flex-start;
+            padding: 20px;
             z-index: 100;
             box-sizing: border-box;
         }
@@ -56,16 +56,11 @@
         }
 
         .qr_show_title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #111;
-            flex: 1;
-            text-align: center;
-            font-family: "Poppins", sans-serif;
+            display: none;
         }
 
         .qr_show_placeholder {
-            width: 20px;
+            display: none;
         }
 
         .qr_show_main_title {
@@ -106,8 +101,8 @@
         }
 
         .qr_show_image {
-            width: 220px;
-            height: 220px;
+            width: 280px;
+            height: 280px;
             object-fit: contain;
         }
 
@@ -165,8 +160,6 @@
             <img src="images/BDZT6fX.png">
             <span>Wróć</span>
         </div>
-        <div class="qr_show_title">Kod QR</div>
-        <div class="qr_show_placeholder"></div>
     </div>
 
     <div class="qr_show_container">
