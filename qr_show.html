@@ -1,39 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
+    <title>mObywatel - Kod QR</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="images/otM5jOA.png">
+    <link rel="apple-touch-icon" href="images/otM5jOA.png">
+    <link rel="shortcut icon" href="images/otM5jOA.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+        .qr_show_container {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            font-family: 'Poppins', sans-serif;
-            background-color: #f0f0f0; /* Replace with the app's color scheme */
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f5f6fb;
+            padding: 20px;
+            padding-top: 60px;
+            padding-bottom: 100px;
         }
-        .qr-container {
+
+        .qr_show_header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background-color: white;
+            border-bottom: 0.5px solid rgb(201, 201, 201);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        .qr_show_back {
+            font-size: 16px;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qr_show_back img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .qr_show_title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111;
+            flex: 1;
+            text-align: center;
+        }
+
+        .qr_show_placeholder {
+            width: 20px;
+        }
+
+        .qr_show_content {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 400px;
             width: 100%;
-            height: 100%;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .qr_show_description {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .qr_show_frame {
+            background-color: #f5f6fb;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            background-color: #ffffff; /* Replace with the app's color scheme */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .qr-code {
-            max-width: 90%;
-            max-height: 90%;
+
+        .qr_show_image {
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            border-radius: 10px;
+            border: 6px solid #1B6335;
+        }
+
+        .qr_show_number {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #111;
+            margin: 20px 0;
+        }
+
+        .qr_show_progress_container {
+            margin-bottom: 15px;
+        }
+
+        #qrProgress {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            background-color: #e6eef2;
+            border: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        #qrProgress::-webkit-progress-bar {
+            background-color: #e6eef2;
+            border-radius: 3px;
+        }
+
+        #qrProgress::-webkit-progress-value {
+            background: linear-gradient(90deg, #1B6335, #3993BD);
+            border-radius: 3px;
+        }
+
+        #qrProgress::-moz-progress-bar {
+            background: linear-gradient(90deg, #1B6335, #3993BD);
+            border-radius: 3px;
+        }
+
+        .qr_show_timer {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
         }
     </style>
-    <title>QR Code Display</title>
 </head>
 <body>
-    <div class="qr-container">
-        <img src="path/to/your/qr-code.png" alt="QR Code" class="qr-code">
+
+    <div class="qr_show_header">
+        <div class="qr_show_back" onclick="goBack()">
+            <img src="images/BDZT6fX.png">
+            <span>Wróć</span>
+        </div>
+        <div class="qr_show_title">Kod QR</div>
+        <div class="qr_show_placeholder"></div>
     </div>
+
+    <div class="qr_show_container">
+        <div class="qr_show_content">
+            <div class="qr_show_description">
+                Pokaż kod QR osobie, której dokument sprawdzasz
+            </div>
+            
+            <div class="qr_show_frame">
+                <img src="images/qr_code.png" class="qr_show_image">
+            </div>
+
+            <div class="qr_show_number">234567</div>
+
+            <div class="qr_show_progress_container">
+                <progress id="qrProgress" value="100" max="100"></progress>
+            </div>
+
+            <div class="qr_show_timer">
+                Kod wygaśnie za: <span id="qrTimer">2:30</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        // Timer
+        let seconds = 150;
+        const timer = document.getElementById("qrTimer");
+        const progress = document.getElementById("qrProgress");
+
+        const interval = setInterval(() => {
+            if (seconds <= 0) {
+                clearInterval(interval);
+                return;
+            }
+
+            const min = Math.floor(seconds / 60);
+            const sec = seconds % 60;
+
+            timer.textContent = `${min}:${sec.toString().padStart(2,"0")}`;
+            progress.value = (seconds / 150) * 100;
+
+            seconds--;
+        }, 1000);
+    </script>
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+
 </body>
 </html>
