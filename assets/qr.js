@@ -1,18 +1,20 @@
-
 var error = document.querySelector(".error");
+var closeButton = document.querySelector(".close");
 
+// Otwieranie modala
 document.querySelectorAll(".action").forEach((element) => {
-    element.addEventListener('click', () => {
+    element.addEventListener('click', (e) => {
+        e.stopPropagation(); // Zapobiega natychmiastowemu zamknięciu
         error.classList.add("error_open");
     });
 });
 
-document.querySelectorAll(".close").forEach((element) => {
-    element.addEventListener('click', () => {
-        error.classList.remove("error_open");
-    })
+// Zamykanie - TYLKO jeśli klikniesz dokładnie w overlay
+closeButton.addEventListener('click', () => {
+    error.classList.remove("error_open");
+});
 
-})
+// Timer i progress
 let seconds = 150;
 const timer = document.getElementById("qrTimer");
 const progress = document.getElementById("qrProgress");
